@@ -7,11 +7,6 @@ import bcrypt
 from datetime import datetime
 
 from db import make_connection, close_connection
-import secrets
-
-import time
-
-from itsdangerous import URLSafeSerializer
 
 def register(data: Dict[str, str]):
     email = data["email"]
@@ -31,7 +26,7 @@ def register(data: Dict[str, str]):
         return jsonify({"error": "database connection failed"}), 500
 
     # Format the current time into a string
-    date_string = datetime.now().strftime("%d.%m.%Y")
+    date_string = datetime.now().strftime("%Y-%m-%d")
 
     cursor = conn.cursor()
 
@@ -76,9 +71,9 @@ def login(data: Dict[str, str]):
     else:
         return jsonify({"error": "invalid email or password"}), 401
 
-
-
-
+def logout():
+    session.pop("user_id", None)
+    return jsonify({"success": "true", "message": "You've been logged out successfully."}), 200
 
 
 
