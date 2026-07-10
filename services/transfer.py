@@ -34,8 +34,6 @@ def make_transfer(data: Dict[str, str]):
     available_balance = row[1]
 
     logged_in_user_id = session.get("user_id")
-    if not logged_in_user_id:
-        return jsonify({"error": "user not logged in"}), 401
 
     if logged_in_user_id != from_account_user_id:
         return jsonify({"error": "invalid sender account"}), 400
@@ -46,7 +44,7 @@ def make_transfer(data: Dict[str, str]):
 
     amount = float(amount)
     if amount <= 0:
-        return jsonify({"error": "amount cannot be negative"}), 400
+        return jsonify({"error": "amount must be positive"}), 400
 
     if available_balance < amount:
         return jsonify({"error": "balance cannot be less than amount"}), 400

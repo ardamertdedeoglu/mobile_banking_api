@@ -2,7 +2,7 @@ from typing import Dict
 
 from flask import jsonify, session
 
-from db import make_connection
+from db import make_connection, close_connection
 
 from datetime import datetime
 import sqlite3
@@ -23,7 +23,7 @@ def create_account(data: Dict[str, str]):
         return jsonify({"error": "invalid currency"}), 400
 
     if account_initial_balance < 0:
-        return jsonify({"error": "balance cannot be less than/or zero"}), 400
+        return jsonify({"error": "balance cannot be negative"}), 400
 
     logged_in_user_id = session["user_id"]
 
@@ -41,6 +41,7 @@ def create_account(data: Dict[str, str]):
     """, (logged_in_user_id, account_name, account_currency, account_initial_balance, date_string))
 
     conn.commit()
+    close_connection(conn)
     return jsonify({"success" : "true", "account_user_id": logged_in_user_id}), 201
 
 def list_accounts():
@@ -62,6 +63,7 @@ def list_accounts():
     rows = cursor.fetchall()
 
     accounts_data = [dict(row) for row in rows]
+    close_connection(conn)
     return jsonify(accounts_data), 200
 
 def list_accounts_by_id(account_id):
@@ -84,7 +86,7 @@ def list_accounts_by_id(account_id):
     if account_user_id != session.get("user_id"):
         return jsonify({"error": "cannot see another user's account"}), 403
 
-
+    close_connection(conn)
     return jsonify(dict(row)), 200
 
 

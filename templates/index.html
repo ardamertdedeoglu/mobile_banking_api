@@ -1,43 +1,54 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mobile Banking API — Test Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
     <style>
         /* ── Reset & Base ─────────────────────────────────── */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        :root {
-            --bg-primary:   #0a0e1a;
-            --bg-secondary: #111827;
-            --bg-card:      rgba(17, 24, 39, .72);
-            --bg-input:     rgba(30, 41, 59, .6);
-            --border:       rgba(99, 102, 241, .18);
-            --border-hover: rgba(99, 102, 241, .4);
-            --accent:       #818cf8;
-            --accent-glow:  rgba(129, 140, 248, .25);
-            --success:      #34d399;
-            --success-bg:   rgba(52, 211, 153, .1);
-            --error:        #f87171;
-            --error-bg:     rgba(248, 113, 113, .1);
-            --warning:      #fbbf24;
-            --text-primary: #f1f5f9;
-            --text-secondary:#94a3b8;
-            --text-muted:   #64748b;
-            --radius:       14px;
-            --radius-sm:    10px;
-            --font-sans:    'Inter', -apple-system, sans-serif;
-            --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-        html { scroll-behavior: smooth; }
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #111827;
+            --bg-card: rgba(17, 24, 39, .72);
+            --bg-input: rgba(30, 41, 59, .6);
+            --border: rgba(99, 102, 241, .18);
+            --border-hover: rgba(99, 102, 241, .4);
+            --accent: #818cf8;
+            --accent-glow: rgba(129, 140, 248, .25);
+            --success: #34d399;
+            --success-bg: rgba(52, 211, 153, .1);
+            --error: #f87171;
+            --error-bg: rgba(248, 113, 113, .1);
+            --warning: #fbbf24;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --radius: 14px;
+            --radius-sm: 10px;
+            --font-sans: 'Inter', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
 
         body {
-            font-family: var(--font-sans);
+            font-family: var(--font-sans),serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
@@ -60,8 +71,13 @@
         }
 
         @keyframes meshPulse {
-            0%   { opacity: .7; }
-            100% { opacity: 1; }
+            0% {
+                opacity: .7;
+            }
+
+            100% {
+                opacity: 1;
+            }
         }
 
         /* ── Layout ───────────────────────────────────────── */
@@ -96,15 +112,25 @@
         }
 
         .header__badge .dot {
-            width: 7px; height: 7px;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
             background: var(--accent);
             animation: pulse 2s ease-in-out infinite;
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50%      { opacity: .4; transform: scale(.8); }
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: .4;
+                transform: scale(.8);
+            }
         }
 
         .header h1 {
@@ -142,23 +168,35 @@
             transition: border-color .3s;
         }
 
-        .session-bar:hover { border-color: var(--border-hover); }
+        .session-bar:hover {
+            border-color: var(--border-hover);
+        }
 
         .session-bar .indicator {
-            width: 9px; height: 9px;
+            width: 9px;
+            height: 9px;
             border-radius: 50%;
             flex-shrink: 0;
             transition: background .3s;
         }
 
-        .session-bar .indicator.off  { background: var(--error); box-shadow: 0 0 8px var(--error); }
-        .session-bar .indicator.on   { background: var(--success); box-shadow: 0 0 8px var(--success); }
+        .session-bar .indicator.off {
+            background: var(--error);
+            box-shadow: 0 0 8px var(--error);
+        }
 
-        .session-bar span { color: var(--text-secondary); }
+        .session-bar .indicator.on {
+            background: var(--success);
+            box-shadow: 0 0 8px var(--success);
+        }
+
+        .session-bar span {
+            color: var(--text-secondary);
+        }
 
         #sessionLogout {
             background: none;
-            border: 1px solid rgba(248,113,113,.3);
+            border: 1px solid rgba(248, 113, 113, .3);
             color: var(--error);
             padding: .25rem .7rem;
             border-radius: 6px;
@@ -198,13 +236,13 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(99,102,241,.04), transparent 60%);
+            background: linear-gradient(135deg, rgba(99, 102, 241, .04), transparent 60%);
             pointer-events: none;
         }
 
         .card:hover {
             border-color: var(--border-hover);
-            box-shadow: 0 8px 32px rgba(0,0,0,.25);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, .25);
             transform: translateY(-2px);
         }
 
@@ -216,7 +254,8 @@
         }
 
         .card__icon {
-            width: 38px; height: 38px;
+            width: 38px;
+            height: 38px;
             border-radius: var(--radius-sm);
             display: grid;
             place-items: center;
@@ -224,10 +263,21 @@
             flex-shrink: 0;
         }
 
-        .card__icon.auth    { background: linear-gradient(135deg, #6366f1, #818cf8); }
-        .card__icon.account { background: linear-gradient(135deg, #0ea5e9, #38bdf8); }
-        .card__icon.transfer{ background: linear-gradient(135deg, #f59e0b, #fbbf24); }
-        .card__icon.txn     { background: linear-gradient(135deg, #10b981, #34d399); }
+        .card__icon.auth {
+            background: linear-gradient(135deg, #6366f1, #818cf8);
+        }
+
+        .card__icon.account {
+            background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+        }
+
+        .card__icon.transfer {
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+        }
+
+        .card__icon.txn {
+            background: linear-gradient(135deg, #10b981, #34d399);
+        }
 
         .card__title {
             font-size: 1rem;
@@ -244,8 +294,15 @@
             margin-top: .15rem;
         }
 
-        .card__method.post { background: rgba(99,102,241,.15); color: #a5b4fc; }
-        .card__method.get  { background: rgba(52,211,153,.15); color: #6ee7b7; }
+        .card__method.post {
+            background: rgba(99, 102, 241, .15);
+            color: #a5b4fc;
+        }
+
+        .card__method.get {
+            background: rgba(52, 211, 153, .15);
+            color: #6ee7b7;
+        }
 
         .card__endpoint {
             font-family: var(--font-mono);
@@ -287,7 +344,9 @@
             transition: border-color .25s, box-shadow .25s;
         }
 
-        .form-group input::placeholder { color: var(--text-muted); }
+        .form-group input::placeholder {
+            color: var(--text-muted);
+        }
 
         .form-group input:focus,
         .form-group select:focus {
@@ -299,6 +358,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: .75rem;
+            align-items: end;
         }
 
         /* ── Buttons ──────────────────────────────────────── */
@@ -320,7 +380,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,.08), transparent);
+            background: linear-gradient(135deg, rgba(255, 255, 255, .08), transparent);
             pointer-events: none;
         }
 
@@ -334,7 +394,9 @@
             transform: translateY(-1px);
         }
 
-        .btn-primary:active { transform: translateY(0); }
+        .btn-primary:active {
+            transform: translateY(0);
+        }
 
         .btn-success {
             background: linear-gradient(135deg, #059669, #10b981);
@@ -376,18 +438,29 @@
         /* Loading spinner inside button */
         .btn .spinner {
             display: none;
-            width: 16px; height: 16px;
-            border: 2px solid rgba(255,255,255,.3);
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, .3);
             border-top-color: #fff;
             border-radius: 50%;
             animation: spin .6s linear infinite;
             margin-right: .5rem;
         }
 
-        .btn.loading .spinner { display: inline-block; }
-        .btn.loading { pointer-events: none; opacity: .7; }
+        .btn.loading .spinner {
+            display: inline-block;
+        }
 
-        @keyframes spin { to { transform: rotate(360deg); } }
+        .btn.loading {
+            pointer-events: none;
+            opacity: .7;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
 
         /* ── Response Panel ────────────────────────────────── */
         .response-panel {
@@ -404,7 +477,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(52,211,153,.03), transparent 60%);
+            background: linear-gradient(135deg, rgba(52, 211, 153, .03), transparent 60%);
             pointer-events: none;
         }
 
@@ -428,9 +501,20 @@
             margin-left: auto;
         }
 
-        .response-status.ok   { background: var(--success-bg); color: var(--success); }
-        .response-status.err  { background: var(--error-bg); color: var(--error); }
-        .response-status.idle { background: var(--bg-input); color: var(--text-muted); }
+        .response-status.ok {
+            background: var(--success-bg);
+            color: var(--success);
+        }
+
+        .response-status.err {
+            background: var(--error-bg);
+            color: var(--error);
+        }
+
+        .response-status.idle {
+            background: var(--bg-input);
+            color: var(--text-muted);
+        }
 
         #responseBody {
             background: rgba(15, 23, 42, .6);
@@ -448,9 +532,18 @@
             word-break: break-word;
         }
 
-        #responseBody::-webkit-scrollbar { width: 6px; }
-        #responseBody::-webkit-scrollbar-track { background: transparent; }
-        #responseBody::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 3px; }
+        #responseBody::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #responseBody::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        #responseBody::-webkit-scrollbar-thumb {
+            background: var(--text-muted);
+            border-radius: 3px;
+        }
 
         /* ── Helpers & note text ───────────────────────────── */
         .note {
@@ -460,7 +553,9 @@
             line-height: 1.5;
         }
 
-        .note strong { color: var(--text-secondary); }
+        .note strong {
+            color: var(--text-secondary);
+        }
 
         .separator {
             border: none;
@@ -484,453 +579,493 @@
             transition: all .4s cubic-bezier(.34, 1.56, .64, 1);
         }
 
-        .toast.show { transform: translateY(0); opacity: 1; }
-        .toast.success { background: linear-gradient(135deg, #059669, #10b981); }
-        .toast.error   { background: linear-gradient(135deg, #dc2626, #f87171); }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            background: linear-gradient(135deg, #059669, #10b981);
+        }
+
+        .toast.error {
+            background: linear-gradient(135deg, #dc2626, #f87171);
+        }
 
         /* ── Responsive ───────────────────────────────────── */
         @media (max-width: 720px) {
-            .grid { grid-template-columns: 1fr; }
-            .form-row { grid-template-columns: 1fr; }
-            .app { padding: 1.25rem 1rem 3rem; }
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .app {
+                padding: 1.25rem 1rem 3rem;
+            }
         }
 
         /* ── JSON syntax highlight helpers ────────────────── */
-        .json-key    { color: #818cf8; }
-        .json-string { color: #34d399; }
-        .json-number { color: #fbbf24; }
-        .json-bool   { color: #f472b6; }
-        .json-null   { color: #64748b; }
+        .json-key {
+            color: #818cf8;
+        }
+
+        .json-string {
+            color: #34d399;
+        }
+
+        .json-number {
+            color: #fbbf24;
+        }
+
+        .json-bool {
+            color: #f472b6;
+        }
+
+        .json-null {
+            color: #64748b;
+        }
     </style>
 </head>
+
 <body>
 
-<div class="app">
+    <div class="app">
 
-    <!-- ─── Header ──────────────────────────────────────── -->
-    <header class="header">
-        <div class="header__badge"><span class="dot"></span> API Test Dashboard</div>
-        <h1>Mobile Banking API</h1>
-        <p>Tüm endpoint'lerinizi tarayıcıdan kolayca test edin.</p>
-    </header>
+        <!-- ─── Header ──────────────────────────────────────── -->
+        <header class="header">
+            <div class="header__badge"><span class="dot"></span> API Test Dashboard</div>
+            <h1>Mobile Banking API</h1>
+            <p>Tüm endpoint'lerinizi tarayıcıdan kolayca test edin.</p>
+        </header>
 
-    <!-- ─── Session Bar ─────────────────────────────────── -->
-    <div class="session-bar">
-        <span class="indicator off" id="sessionIndicator"></span>
-        <span id="sessionText">Oturum açılmadı</span>
-        <button id="sessionLogout" onclick="doLogout()">Çıkış Yap</button>
-    </div>
-
-    <!-- ─── Card Grid ───────────────────────────────────── -->
-    <div class="grid">
-
-        <!-- Register -->
-        <div class="card" id="cardRegister">
-            <div class="card__head">
-                <div class="card__icon auth">🔐</div>
-                <div>
-                    <div class="card__title">Kayıt Ol</div>
-                    <span class="card__method post">POST</span>
-                </div>
-            </div>
-            <code class="card__endpoint">/api/auth/register</code>
-            <form onsubmit="return handleRegister(event)">
-                <div class="form-group">
-                    <label for="regEmail">E-posta</label>
-                    <input type="email" id="regEmail" placeholder="ornek@mail.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="regPassword">Şifre <span style="color:var(--text-muted)">(min 12 karakter)</span></label>
-                    <input type="password" id="regPassword" placeholder="••••••••••••" minlength="12" required>
-                </div>
-                <button class="btn btn-primary" type="submit"><span class="spinner"></span>Kayıt Ol</button>
-            </form>
+        <!-- ─── Session Bar ─────────────────────────────────── -->
+        <div class="session-bar">
+            <span class="indicator off" id="sessionIndicator"></span>
+            <span id="sessionText">Oturum açılmadı</span>
+            <button id="sessionLogout" onclick="doLogout()">Çıkış Yap</button>
         </div>
 
-        <!-- Login -->
-        <div class="card" id="cardLogin">
-            <div class="card__head">
-                <div class="card__icon auth">🔑</div>
-                <div>
-                    <div class="card__title">Giriş Yap</div>
-                    <span class="card__method post">POST</span>
-                </div>
-            </div>
-            <code class="card__endpoint">/api/auth/login</code>
-            <form onsubmit="return handleLogin(event)">
-                <div class="form-group">
-                    <label for="loginEmail">E-posta</label>
-                    <input type="email" id="loginEmail" placeholder="ornek@mail.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="loginPassword">Şifre</label>
-                    <input type="password" id="loginPassword" placeholder="••••••••••••" required>
-                </div>
-                <button class="btn btn-primary" type="submit"><span class="spinner"></span>Giriş Yap</button>
-            </form>
-        </div>
+        <!-- ─── Card Grid ───────────────────────────────────── -->
+        <div class="grid">
 
-        <!-- Create Account -->
-        <div class="card" id="cardCreateAccount">
-            <div class="card__head">
-                <div class="card__icon account">🏦</div>
-                <div>
-                    <div class="card__title">Hesap Oluştur</div>
-                    <span class="card__method post">POST</span>
-                </div>
-            </div>
-            <code class="card__endpoint">/api/accounts</code>
-            <form onsubmit="return handleCreateAccount(event)">
-                <div class="form-group">
-                    <label for="accName">Hesap Adı</label>
-                    <input type="text" id="accName" placeholder="Maaş Hesabı" required>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="accCurrency">Para Birimi</label>
-                        <select id="accCurrency" required>
-                            <option value="TRY">🇹🇷 TRY</option>
-                            <option value="USD">🇺🇸 USD</option>
-                            <option value="EUR">🇪🇺 EUR</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="accBalance">Başlangıç Bakiye</label>
-                        <input type="number" id="accBalance" placeholder="1000" min="0" step="0.01" required>
+            <!-- Register -->
+            <div class="card" id="cardRegister">
+                <div class="card__head">
+                    <div class="card__icon auth">🔐</div>
+                    <div>
+                        <div class="card__title">Kayıt Ol</div>
+                        <span class="card__method post">POST</span>
                     </div>
                 </div>
-                <button class="btn btn-info" type="submit"><span class="spinner"></span>Hesap Oluştur</button>
-            </form>
-            <p class="note">⚠️ Oturum açmış olmanız gerekir.</p>
-        </div>
-
-        <!-- List Accounts -->
-        <div class="card" id="cardListAccounts">
-            <div class="card__head">
-                <div class="card__icon account">📋</div>
-                <div>
-                    <div class="card__title">Hesaplarımı Listele</div>
-                    <span class="card__method get">GET</span>
-                </div>
-            </div>
-            <code class="card__endpoint">/api/accounts</code>
-            <button class="btn btn-success" onclick="handleListAccounts(this)"><span class="spinner"></span>Hesapları Getir</button>
-            <p class="note">⚠️ Oturum açmış olmanız gerekir.</p>
-        </div>
-
-        <!-- Account Detail -->
-        <div class="card" id="cardAccountDetail">
-            <div class="card__head">
-                <div class="card__icon account">🔍</div>
-                <div>
-                    <div class="card__title">Hesap Detayı</div>
-                    <span class="card__method get">GET</span>
-                </div>
-            </div>
-            <code class="card__endpoint">/api/accounts/{id}</code>
-            <form onsubmit="return handleAccountDetail(event)">
-                <div class="form-group">
-                    <label for="detailAccountId">Hesap ID</label>
-                    <input type="number" id="detailAccountId" placeholder="1" min="1" required>
-                </div>
-                <button class="btn btn-info" type="submit"><span class="spinner"></span>Detay Getir</button>
-            </form>
-            <p class="note">⚠️ Sadece kendi hesabınızın detayını görebilirsiniz.</p>
-        </div>
-
-        <!-- Transfer / Deposit -->
-        <div class="card" id="cardTransfer">
-            <div class="card__head">
-                <div class="card__icon transfer">💸</div>
-                <div>
-                    <div class="card__title">Transfer / Para Yatırma</div>
-                    <span class="card__method post">POST</span>
-                </div>
-            </div>
-            <code class="card__endpoint">/api/transfers</code>
-            <form onsubmit="return handleTransfer(event)">
-                <div class="form-row">
+                <code class="card__endpoint">/api/auth/register</code>
+                <form onsubmit="return handleRegister(event)">
                     <div class="form-group">
-                        <label for="txFromAccount">Gönderen Hesap ID</label>
-                        <input type="number" id="txFromAccount" placeholder="1" required>
+                        <label for="regEmail">E-posta</label>
+                        <input type="email" id="regEmail" placeholder="ornek@mail.com" required>
                     </div>
                     <div class="form-group">
-                        <label for="txToAccount">Alıcı Hesap ID <span style="color:var(--text-muted)">(boş = deposit)</span></label>
-                        <input type="text" id="txToAccount" placeholder="2 veya boş bırak">
+                        <label for="regPassword">Şifre <span style="color:var(--text-muted)">(min 12
+                                karakter)</span></label>
+                        <input type="password" id="regPassword" placeholder="••••••••••••" minlength="12" required>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="txAmount">Tutar</label>
-                    <input type="number" id="txAmount" placeholder="250.00" min="0" step="0.01" required>
-                </div>
-                <button class="btn btn-warning" type="submit"><span class="spinner"></span>Gönder</button>
-            </form>
-            <p class="note"><strong>Deposit:</strong> "Alıcı Hesap ID" alanını boş bırakın. <strong>Transfer:</strong> Her iki hesap ID'sini girin.</p>
-        </div>
-
-        <!-- Transactions -->
-        <div class="card" id="cardTransactions">
-            <div class="card__head">
-                <div class="card__icon txn">📊</div>
-                <div>
-                    <div class="card__title">İşlem Geçmişi</div>
-                    <span class="card__method get">GET</span>
-                </div>
+                    <button class="btn btn-primary" type="submit"><span class="spinner"></span>Kayıt Ol</button>
+                </form>
             </div>
-            <code class="card__endpoint">/api/accounts/:id/transactions</code>
-            <form onsubmit="return handleTransactions(event)">
-                <div class="form-group">
-                    <label for="txnAccountId">Hesap ID</label>
-                    <input type="number" id="txnAccountId" placeholder="1" required>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="txnStartDate">Başlangıç Tarihi <span style="color:var(--text-muted)">(opsiyonel)</span></label>
-                        <input type="text" id="txnStartDate" placeholder="2026-01-01 00:00:00">
-                    </div>
-                    <div class="form-group">
-                        <label for="txnEndDate">Bitiş Tarihi <span style="color:var(--text-muted)">(opsiyonel)</span></label>
-                        <input type="text" id="txnEndDate" placeholder="2026-12-31 23:59:59">
+
+            <!-- Login -->
+            <div class="card" id="cardLogin">
+                <div class="card__head">
+                    <div class="card__icon auth">🔑</div>
+                    <div>
+                        <div class="card__title">Giriş Yap</div>
+                        <span class="card__method post">POST</span>
                     </div>
                 </div>
-                <button class="btn btn-success" type="submit"><span class="spinner"></span>İşlemleri Getir</button>
-            </form>
-            <p class="note">⚠️ Oturum açmış olmanız ve hesabın size ait olması gerekir.</p>
+                <code class="card__endpoint">/api/auth/login</code>
+                <form onsubmit="return handleLogin(event)">
+                    <div class="form-group">
+                        <label for="loginEmail">E-posta</label>
+                        <input type="email" id="loginEmail" placeholder="ornek@mail.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Şifre</label>
+                        <input type="password" id="loginPassword" placeholder="••••••••••••" required>
+                    </div>
+                    <button class="btn btn-primary" type="submit"><span class="spinner"></span>Giriş Yap</button>
+                </form>
+            </div>
+
+            <!-- Create Account -->
+            <div class="card" id="cardCreateAccount">
+                <div class="card__head">
+                    <div class="card__icon account">🏦</div>
+                    <div>
+                        <div class="card__title">Hesap Oluştur</div>
+                        <span class="card__method post">POST</span>
+                    </div>
+                </div>
+                <code class="card__endpoint">/api/accounts</code>
+                <form onsubmit="return handleCreateAccount(event)">
+                    <div class="form-group">
+                        <label for="accName">Hesap Adı</label>
+                        <input type="text" id="accName" placeholder="Maaş Hesabı" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="accCurrency">Para Birimi</label>
+                            <select id="accCurrency" required>
+                                <option value="TRY">🇹🇷 TRY</option>
+                                <option value="USD">🇺🇸 USD</option>
+                                <option value="EUR">🇪🇺 EUR</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="accBalance">Başlangıç Bakiye</label>
+                            <input type="number" id="accBalance" placeholder="1000" min="0" step="0.01" required>
+                        </div>
+                    </div>
+                    <button class="btn btn-info" type="submit"><span class="spinner"></span>Hesap Oluştur</button>
+                </form>
+                <p class="note">⚠️ Oturum açmış olmanız gerekir.</p>
+            </div>
+
+            <!-- List Accounts -->
+            <div class="card" id="cardListAccounts">
+                <div class="card__head">
+                    <div class="card__icon account">📋</div>
+                    <div>
+                        <div class="card__title">Hesaplarımı Listele</div>
+                        <span class="card__method get">GET</span>
+                    </div>
+                </div>
+                <code class="card__endpoint">/api/accounts</code>
+                <button class="btn btn-success" onclick="handleListAccounts(this)"><span
+                        class="spinner"></span>Hesapları Getir</button>
+                <p class="note">⚠️ Oturum açmış olmanız gerekir.</p>
+            </div>
+
+            <!-- Account Detail -->
+            <div class="card" id="cardAccountDetail">
+                <div class="card__head">
+                    <div class="card__icon account">🔍</div>
+                    <div>
+                        <div class="card__title">Hesap Detayı</div>
+                        <span class="card__method get">GET</span>
+                    </div>
+                </div>
+                <code class="card__endpoint">/api/accounts/{id}</code>
+                <form onsubmit="return handleAccountDetail(event)">
+                    <div class="form-group">
+                        <label for="detailAccountId">Hesap ID</label>
+                        <input type="number" id="detailAccountId" placeholder="1" min="1" required>
+                    </div>
+                    <button class="btn btn-info" type="submit"><span class="spinner"></span>Detay Getir</button>
+                </form>
+                <p class="note">⚠️ Sadece kendi hesabınızın detayını görebilirsiniz.</p>
+            </div>
+
+            <!-- Transfer / Deposit -->
+            <div class="card" id="cardTransfer">
+                <div class="card__head">
+                    <div class="card__icon transfer">💸</div>
+                    <div>
+                        <div class="card__title">Transfer / Para Yatırma</div>
+                        <span class="card__method post">POST</span>
+                    </div>
+                </div>
+                <code class="card__endpoint">/api/transfers</code>
+                <form onsubmit="return handleTransfer(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="txFromAccount">Gönderen Hesap ID</label>
+                            <input type="number" id="txFromAccount" placeholder="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="txToAccount">Alıcı Hesap ID <span style="color:var(--text-muted)">(boş =
+                                    deposit)</span></label>
+                            <input type="text" id="txToAccount" placeholder="2 veya boş bırak">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="txAmount">Tutar</label>
+                        <input type="number" id="txAmount" placeholder="250.00" min="0" step="0.01" required>
+                    </div>
+                    <button class="btn btn-warning" type="submit"><span class="spinner"></span>Gönder</button>
+                </form>
+                <p class="note"><strong>Deposit:</strong> "Alıcı Hesap ID" alanını boş bırakın.
+                    <strong>Transfer:</strong> Her iki hesap ID'sini girin.
+                </p>
+            </div>
+
+            <!-- Transactions -->
+            <div class="card" id="cardTransactions">
+                <div class="card__head">
+                    <div class="card__icon txn">📊</div>
+                    <div>
+                        <div class="card__title">İşlem Geçmişi</div>
+                        <span class="card__method get">GET</span>
+                    </div>
+                </div>
+                <code class="card__endpoint">/api/accounts/{id}/transactions</code>
+                <form onsubmit="return handleTransactions(event)">
+                    <div class="form-group">
+                        <label for="txnAccountId">Hesap ID</label>
+                        <input type="number" id="txnAccountId" placeholder="1" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="txnStartDate">Başlangıç Tarihi <span
+                                    style="color:var(--text-muted)">(opsiyonel)</span></label>
+                            <input type="text" id="txnStartDate" placeholder="2026-01-01 00:00:00">
+                        </div>
+                        <div class="form-group">
+                            <label for="txnEndDate">Bitiş Tarihi <span
+                                    style="color:var(--text-muted)">(opsiyonel)</span></label>
+                            <input type="text" id="txnEndDate" placeholder="2026-12-31 23:59:59">
+                        </div>
+                    </div>
+                    <button class="btn btn-success" type="submit"><span class="spinner"></span>İşlemleri Getir</button>
+                </form>
+                <p class="note">⚠️ Oturum açmış olmanız ve hesabın size ait olması gerekir.</p>
+            </div>
+
+        </div><!-- /.grid -->
+
+        <!-- ─── Response Panel ──────────────────────────────── -->
+        <div class="response-panel">
+            <h2>
+                📡 Yanıt
+                <span class="response-status idle" id="responseStatus">Bekleniyor…</span>
+            </h2>
+            <div id="responseBody">Henüz bir istek gönderilmedi. Yukarıdaki formlardan birini kullanarak başlayın.</div>
         </div>
 
-    </div><!-- /.grid -->
+    </div><!-- /.app -->
 
-    <!-- ─── Response Panel ──────────────────────────────── -->
-    <div class="response-panel">
-        <h2>
-            📡 Yanıt
-            <span class="response-status idle" id="responseStatus">Bekleniyor…</span>
-        </h2>
-        <div id="responseBody">Henüz bir istek gönderilmedi.\nYukarıdaki formlardan birini kullanarak başlayın.</div>
-    </div>
+    <!-- ─── Toast ───────────────────────────────────────── -->
+    <div class="toast" id="toast"></div>
 
-</div><!-- /.app -->
+    <script>
+        /* ── Helpers ──────────────────────────────────────────── */
+        const $ = (sel) => document.querySelector(sel);
+        const responseBody = $('#responseBody');
+        const responseStatus = $('#responseStatus');
+        const sessionIndicator = $('#sessionIndicator');
+        const sessionText = $('#sessionText');
+        const sessionLogoutBtn = $('#sessionLogout');
+        const toastEl = $('#toast');
 
-<!-- ─── Toast ───────────────────────────────────────── -->
-<div class="toast" id="toast"></div>
+        let loggedIn = false;
+        let loggedUserId = null;
 
-<script>
-    /* ── Helpers ──────────────────────────────────────────── */
-    const $ = (sel) => document.querySelector(sel);
-    const responseBody   = $('#responseBody');
-    const responseStatus = $('#responseStatus');
-    const sessionIndicator = $('#sessionIndicator');
-    const sessionText = $('#sessionText');
-    const sessionLogoutBtn = $('#sessionLogout');
-    const toastEl = $('#toast');
+        function toast(msg, type = 'success') {
+            toastEl.textContent = msg;
+            toastEl.className = 'toast ' + type + ' show';
+            setTimeout(() => toastEl.classList.remove('show'), 3000);
+        }
 
-    let loggedIn = false;
-    let loggedUserId = null;
+        function setSessionUI(isLoggedIn, userId) {
+            loggedIn = isLoggedIn;
+            loggedUserId = userId;
+            sessionIndicator.className = 'indicator ' + (isLoggedIn ? 'on' : 'off');
+            sessionText.textContent = isLoggedIn
+                ? `Oturum aktif — user_id: ${userId}`
+                : 'Oturum açılmadı';
+            sessionLogoutBtn.style.display = isLoggedIn ? 'inline-block' : 'none';
+        }
 
-    function toast(msg, type = 'success') {
-        toastEl.textContent = msg;
-        toastEl.className = 'toast ' + type + ' show';
-        setTimeout(() => toastEl.classList.remove('show'), 3000);
-    }
+        function setLoading(btn, loading) {
+            if (loading) btn.classList.add('loading');
+            else btn.classList.remove('loading');
+        }
 
-    function setSessionUI(isLoggedIn, userId) {
-        loggedIn = isLoggedIn;
-        loggedUserId = userId;
-        sessionIndicator.className = 'indicator ' + (isLoggedIn ? 'on' : 'off');
-        sessionText.textContent = isLoggedIn
-            ? `Oturum aktif — user_id: ${userId}`
-            : 'Oturum açılmadı';
-        sessionLogoutBtn.style.display = isLoggedIn ? 'inline-block' : 'none';
-    }
-
-    function setLoading(btn, loading) {
-        if (loading) btn.classList.add('loading');
-        else btn.classList.remove('loading');
-    }
-
-    /* Syntax highlighted JSON */
-    function highlightJSON(obj) {
-        const json = JSON.stringify(obj, null, 2);
-        return json.replace(
-            /("(\\u[\da-fA-F]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
-            (match) => {
-                let cls = 'json-number';
-                if (/^"/.test(match)) {
-                    cls = /:$/.test(match) ? 'json-key' : 'json-string';
-                } else if (/true|false/.test(match)) {
-                    cls = 'json-bool';
-                } else if (/null/.test(match)) {
-                    cls = 'json-null';
+        /* Syntax highlighted JSON */
+        function highlightJSON(obj) {
+            const json = JSON.stringify(obj, null, 2);
+            return json.replace(
+                /("(\\u[\da-fA-F]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+                (match) => {
+                    let cls = 'json-number';
+                    if (/^"/.test(match)) {
+                        cls = /:$/.test(match) ? 'json-key' : 'json-string';
+                    } else if (/true|false/.test(match)) {
+                        cls = 'json-bool';
+                    } else if (/null/.test(match)) {
+                        cls = 'json-null';
+                    }
+                    return `<span class="${cls}">${match}</span>`;
                 }
-                return `<span class="${cls}">${match}</span>`;
+            );
+        }
+
+        function showResponse(data, status) {
+            const isOk = status >= 200 && status < 300;
+            responseStatus.textContent = `${status} ${isOk ? 'OK' : 'Error'}`;
+            responseStatus.className = 'response-status ' + (isOk ? 'ok' : 'err');
+            responseBody.innerHTML = highlightJSON(data);
+        }
+
+        async function apiCall(url, options = {}) {
+            try {
+                const res = await fetch(url, {
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'same-origin',
+                    ...options
+                });
+                const data = await res.json();
+                showResponse(data, res.status);
+                return { data, status: res.status };
+            } catch (err) {
+                const errObj = { error: err.message };
+                showResponse(errObj, 0);
+                toast('İstek başarısız: ' + err.message, 'error');
+                return { data: errObj, status: 0 };
             }
-        );
-    }
+        }
 
-    function showResponse(data, status) {
-        const isOk = status >= 200 && status < 300;
-        responseStatus.textContent = `${status} ${isOk ? 'OK' : 'Error'}`;
-        responseStatus.className = 'response-status ' + (isOk ? 'ok' : 'err');
-        responseBody.innerHTML = highlightJSON(data);
-    }
+        /* ── Handlers ─────────────────────────────────────────── */
 
-    async function apiCall(url, options = {}) {
-        try {
-            const res = await fetch(url, {
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'same-origin',
-                ...options
+        async function handleRegister(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            setLoading(btn, true);
+
+            const { data, status } = await apiCall('/api/auth/register', {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: $('#regEmail').value,
+                    password: $('#regPassword').value
+                })
             });
-            const data = await res.json();
-            showResponse(data, res.status);
-            return { data, status: res.status };
-        } catch (err) {
-            const errObj = { error: err.message };
-            showResponse(errObj, 0);
-            toast('İstek başarısız: ' + err.message, 'error');
-            return { data: errObj, status: 0 };
+
+            setLoading(btn, false);
+            if (status === 201) toast('Kayıt başarılı!');
+            else toast(data.error || 'Kayıt başarısız', 'error');
+            return false;
         }
-    }
 
-    /* ── Handlers ─────────────────────────────────────────── */
+        async function handleLogin(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            setLoading(btn, true);
 
-    async function handleRegister(e) {
-        e.preventDefault();
-        const btn = e.target.querySelector('button');
-        setLoading(btn, true);
+            const { data, status } = await apiCall('/api/auth/login', {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: $('#loginEmail').value,
+                    password: $('#loginPassword').value
+                })
+            });
 
-        const { data, status } = await apiCall('/api/auth/register', {
-            method: 'POST',
-            body: JSON.stringify({
-                email: $('#regEmail').value,
-                password: $('#regPassword').value
-            })
-        });
-
-        setLoading(btn, false);
-        if (status === 201) toast('Kayıt başarılı!');
-        else toast(data.error || 'Kayıt başarısız', 'error');
-        return false;
-    }
-
-    async function handleLogin(e) {
-        e.preventDefault();
-        const btn = e.target.querySelector('button');
-        setLoading(btn, true);
-
-        const { data, status } = await apiCall('/api/auth/login', {
-            method: 'POST',
-            body: JSON.stringify({
-                email: $('#loginEmail').value,
-                password: $('#loginPassword').value
-            })
-        });
-
-        setLoading(btn, false);
-        if (status === 200) {
-            setSessionUI(true, data.session);
-            toast('Giriş başarılı!');
-        } else {
-            toast(data.error || 'Giriş başarısız', 'error');
+            setLoading(btn, false);
+            if (status === 200) {
+                setSessionUI(true, data.session);
+                toast('Giriş başarılı!');
+            } else {
+                toast(data.error || 'Giriş başarısız', 'error');
+            }
+            return false;
         }
-        return false;
-    }
 
-    async function doLogout() {
-        const { data, status } = await apiCall('/logout', { method: 'GET' });
-        if (status === 200) {
-            setSessionUI(false, null);
-            toast('Çıkış yapıldı');
-        } else {
-            toast('Çıkış başarısız', 'error');
+        async function doLogout() {
+            const { data, status } = await apiCall('/logout', { method: 'GET' });
+            if (status === 200) {
+                setSessionUI(false, null);
+                toast('Çıkış yapıldı');
+            } else {
+                toast('Çıkış başarısız', 'error');
+            }
         }
-    }
 
-    async function handleCreateAccount(e) {
-        e.preventDefault();
-        const btn = e.target.querySelector('button');
-        setLoading(btn, true);
+        async function handleCreateAccount(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            setLoading(btn, true);
 
-        const { data, status } = await apiCall('/api/accounts', {
-            method: 'POST',
-            body: JSON.stringify({
-                name: $('#accName').value,
-                currency: $('#accCurrency').value,
-                initial_balance: $('#accBalance').value
-            })
-        });
+            const { data, status } = await apiCall('/api/accounts', {
+                method: 'POST',
+                body: JSON.stringify({
+                    name: $('#accName').value,
+                    currency: $('#accCurrency').value,
+                    initial_balance: $('#accBalance').value
+                })
+            });
 
-        setLoading(btn, false);
-        if (status === 201) toast('Hesap oluşturuldu!');
-        else toast(data.error || 'Hesap oluşturulamadı', 'error');
-        return false;
-    }
+            setLoading(btn, false);
+            if (status === 201) toast('Hesap oluşturuldu!');
+            else toast(data.error || 'Hesap oluşturulamadı', 'error');
+            return false;
+        }
 
-    async function handleListAccounts(btn) {
-        setLoading(btn, true);
-        const { data, status } = await apiCall('/api/accounts', { method: 'GET' });
-        setLoading(btn, false);
-        if (status === 200) toast('Hesaplar listelendi');
-        else toast(data.error || 'Hesaplar getirilemedi', 'error');
-    }
+        async function handleListAccounts(btn) {
+            setLoading(btn, true);
+            const { data, status } = await apiCall('/api/accounts', { method: 'GET' });
+            setLoading(btn, false);
+            if (status === 200) toast('Hesaplar listelendi');
+            else toast(data.error || 'Hesaplar getirilemedi', 'error');
+        }
 
-    async function handleAccountDetail(e) {
-        e.preventDefault();
-        const btn = e.target.querySelector('button');
-        setLoading(btn, true);
+        async function handleAccountDetail(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            setLoading(btn, true);
 
-        const accountId = $('#detailAccountId').value;
-        const { data, status } = await apiCall(`/api/accounts/${accountId}`, { method: 'GET' });
+            const accountId = $('#detailAccountId').value;
+            const { data, status } = await apiCall(`/api/accounts/${accountId}`, { method: 'GET' });
 
-        setLoading(btn, false);
-        if (status === 200) toast('Hesap detayı getirildi');
-        else toast(data.error || 'Hesap detayı getirilemedi', 'error');
-        return false;
-    }
+            setLoading(btn, false);
+            if (status === 200) toast('Hesap detayı getirildi');
+            else toast(data.error || 'Hesap detayı getirilemedi', 'error');
+            return false;
+        }
 
-    async function handleTransfer(e) {
-        e.preventDefault();
-        const btn = e.target.querySelector('button');
-        setLoading(btn, true);
+        async function handleTransfer(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            setLoading(btn, true);
 
-        const { data, status } = await apiCall('/api/transfers', {
-            method: 'POST',
-            body: JSON.stringify({
-                from_account: $('#txFromAccount').value,
-                to_account: $('#txToAccount').value || '',
-                amount: $('#txAmount').value
-            })
-        });
+            const { data, status } = await apiCall('/api/transfers', {
+                method: 'POST',
+                body: JSON.stringify({
+                    from_account: $('#txFromAccount').value,
+                    to_account: $('#txToAccount').value || '',
+                    amount: $('#txAmount').value
+                })
+            });
 
-        setLoading(btn, false);
-        if (status === 201) toast('İşlem başarılı!');
-        else toast(data.error || 'Transfer başarısız', 'error');
-        return false;
-    }
+            setLoading(btn, false);
+            if (status === 201) toast('İşlem başarılı!');
+            else toast(data.error || 'Transfer başarısız', 'error');
+            return false;
+        }
 
-    async function handleTransactions(e) {
-        e.preventDefault();
-        const btn = e.target.querySelector('button');
-        setLoading(btn, true);
+        async function handleTransactions(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            setLoading(btn, true);
 
-        const accountId = $('#txnAccountId').value;
-        const params = new URLSearchParams();
-        const startDate = $('#txnStartDate').value.trim();
-        const endDate = $('#txnEndDate').value.trim();
-        if (startDate) params.set('start_date', startDate);
-        if (endDate) params.set('end_date', endDate);
+            const accountId = $('#txnAccountId').value;
+            const params = new URLSearchParams();
+            const startDate = $('#txnStartDate').value.trim();
+            const endDate = $('#txnEndDate').value.trim();
+            if (startDate) params.set('start_date', startDate);
+            if (endDate) params.set('end_date', endDate);
 
-        const qs = params.toString();
-        const url = `/api/accounts/${accountId}/transactions` + (qs ? '?' + qs : '');
+            const qs = params.toString();
+            const url = `/api/accounts/${accountId}/transactions` + (qs ? '?' + qs : '');
 
-        const { data, status } = await apiCall(url, { method: 'GET' });
+            const { data, status } = await apiCall(url, { method: 'GET' });
 
-        setLoading(btn, false);
-        if (status === 200) toast('İşlemler listelendi');
-        else toast(data.error || 'İşlemler getirilemedi', 'error');
-        return false;
-    }
-</script>
+            setLoading(btn, false);
+            if (status === 200) toast('İşlemler listelendi');
+            else toast(data.error || 'İşlemler getirilemedi', 'error');
+            return false;
+        }
+    </script>
 
 </body>
+
 </html>

@@ -42,7 +42,6 @@ def make_connection():
         );
         """)
 
-
         connection.commit()
     except sqlite3.Error:
         return None

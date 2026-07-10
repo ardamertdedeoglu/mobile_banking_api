@@ -3,7 +3,7 @@ import sqlite3
 from flask import jsonify, session
 from werkzeug.datastructures import MultiDict
 
-from db import make_connection
+from db import make_connection, close_connection
 
 
 def list_transactions(account_id: int, params: MultiDict[str, str]):
@@ -65,5 +65,6 @@ def list_transactions(account_id: int, params: MultiDict[str, str]):
 
     transactions_data = [dict(row) for row in rows]
 
+    close_connection(conn)
     return jsonify(transactions_data), 200
 

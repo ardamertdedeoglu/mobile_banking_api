@@ -1,7 +1,7 @@
 import os
 from typing import Dict
 import sqlite3
-from flask import jsonify, make_response, session, redirect, url_for
+from flask import jsonify, session
 import bcrypt
 
 from datetime import datetime
@@ -25,7 +25,6 @@ def register(data: Dict[str, str]):
     if conn is None:
         return jsonify({"error": "database connection failed"}), 500
 
-    # Format the current time into a string
     date_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     cursor = conn.cursor()
@@ -75,6 +74,8 @@ def login(data: Dict[str, str]):
 
 
 def logout():
+    if "user_id" not in session:
+        return jsonify({"error": "user not logged in"}), 401
     session.pop("user_id", None)
     return jsonify({"success": "true", "message": "You've been logged out successfully."}), 200
 

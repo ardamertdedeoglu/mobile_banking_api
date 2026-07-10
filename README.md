@@ -147,9 +147,9 @@ Veritabanı tabloları (`users`, `accounts`, `transactions`) ilk bağlantıda **
 **Başarılı yanıt (201):**
 ```json
 {
-  "success": "true",
+  "created_at": "2026-07-10 14:30:00",
   "email": "kullanici@ornek.com",
-  "created_at": "2026-07-10 14:30:00"
+  "success": "true"
 }
 ```
 
@@ -165,8 +165,8 @@ Veritabanı tabloları (`users`, `accounts`, `transactions`) ilk bağlantıda **
 **Başarılı yanıt (200):**
 ```json
 {
-  "success": "true",
-  "session": 1
+  "session": 1,
+  "success": "true"
 }
 ```
 
@@ -197,8 +197,8 @@ Veritabanı tabloları (`users`, `accounts`, `transactions`) ilk bağlantıda **
 **Başarılı yanıt (201):**
 ```json
 {
-  "success": "true",
-  "account_user_id": 1
+  "account_user_id": 1,
+  "success": "true"
 }
 ```
 
@@ -209,11 +209,11 @@ Sadece kendi hesabınızın detayını görebilirsiniz. Başka bir kullanıcıya
 **Başarılı yanıt (200):**
 ```json
 {
-  "user_id": 1,
-  "name": "Vadesiz TL",
+  "balance": 1000,
+  "created_at": "2026-07-09",
   "currency": "TRY",
-  "balance": 1000.0,
-  "created_at": "2026-07-10 14:35:00"
+  "name": "Vadesiz TL",
+  "user_id": 1
 }
 ```
 
@@ -255,9 +255,9 @@ Sadece kendi hesabınızın detayını görebilirsiniz. Başka bir kullanıcıya
 **Başarılı yanıt (201) — Transfer:**
 ```json
 {
-  "success": "true",
+  "receiver_balance": 1250.0,
   "sender_balance": 750.0,
-  "receiver_balance": 1250.0
+  "success": "true"
 }
 ```
 
@@ -279,12 +279,12 @@ Sadece kendi hesabınızın detayını görebilirsiniz. Başka bir kullanıcıya
 
 | Parametre | Format | Açıklama |
 |-----------|--------|----------|
-| `start_date` | `YYYY-MM-DD HH:MM:SS` | Bu tarihten sonraki işlemler |
-| `end_date` | `YYYY-MM-DD HH:MM:SS` | Bu tarihten önceki işlemler |
+| `start_date` | `YYYY-MM-DD` | Bu tarihten sonraki işlemler |
+| `end_date` | `YYYY-MM-DD` | Bu tarihten önceki işlemler |
 
 **Örnek:**
 ```
-GET /api/accounts/1/transactions?start_date=2026-01-01 00:00:00&end_date=2026-12-31 23:59:59
+GET /api/accounts/1/transactions?start_date=2026-01-01&end_date=2026-12-31
 ```
 
 **Başarılı yanıt (200):**
@@ -292,17 +292,17 @@ GET /api/accounts/1/transactions?start_date=2026-01-01 00:00:00&end_date=2026-12
 [
   {
     "account_id": 1,
-    "type": "transfer_out",
     "amount": 250.0,
     "counterparty_account_id": 2,
-    "created_at": "2026-07-10 14:40:00"
+    "created_at": "2026-07-10 14:40:00",
+    "type": "transfer_out"
   },
   {
     "account_id": 1,
-    "type": "deposit",
     "amount": 500.0,
     "counterparty_account_id": null,
-    "created_at": "2026-07-10 14:38:00"
+    "created_at": "2026-07-10 14:38:00",
+    "type": "deposit"
   }
 ]
 ```
