@@ -9,19 +9,23 @@ import sqlite3
 
 
 def create_account(data: Dict[str, str]):
-    account_name = data["name"]
-    account_currency = data["currency"]
-    account_initial_balance = float(data["initial_balance"])
+    account_name = data.get("name")
+    account_currency = data.get("currency")
+
+    account_initial_balance = data.get("initial_balance")
+
+    if account_initial_balance is None:
+        return jsonify({"error": "balance must be a number"}), 400
+
+    account_initial_balance = float(account_initial_balance)
 
     if not account_currency or account_currency not in ("USD", "EUR", "TRY"):
         return jsonify({"error": "invalid currency"}), 400
 
-    if not account_initial_balance or account_initial_balance < 0:
-        return jsonify({"error": "balance cannot be less than zero"}), 400
+    if account_initial_balance < 0:
+        return jsonify({"error": "balance cannot be less than/or zero"}), 400
 
     logged_in_user_id = session["user_id"]
-    if not logged_in_user_id:
-        return jsonify({"error": "cannot create an account without logging in"}), 403
 
     conn = make_connection()
     if conn is None:
@@ -29,7 +33,7 @@ def create_account(data: Dict[str, str]):
 
     cursor = conn.cursor()
 
-    date_string = datetime.now().strftime("%Y-%m-%d")
+    date_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     cursor.execute("""
     INSERT INTO accounts (user_id, name, currency, balance, created_at)
@@ -37,7 +41,7 @@ def create_account(data: Dict[str, str]):
     """, (logged_in_user_id, account_name, account_currency, account_initial_balance, date_string))
 
     conn.commit()
-    return jsonify({"success" : "true", "account_user_id": logged_in_user_id})
+    return jsonify({"success" : "true", "account_user_id": logged_in_user_id}), 201
 
 def list_accounts():
     conn = make_connection()
@@ -46,8 +50,6 @@ def list_accounts():
         return jsonify({"error": "database connection failed"}), 500
 
     logged_in_user_id = session.get("user_id")
-    if not logged_in_user_id:
-        return jsonify({"error": "cannot list accounts without logging in"}), 403
 
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
@@ -61,4 +63,28 @@ def list_accounts():
 
     accounts_data = [dict(row) for row in rows]
     return jsonify(accounts_data), 200
+
+def list_accounts_by_id(account_id):
+    conn = make_connection()
+    if conn is None:
+        return jsonify({"error": "database connection failed"}), 500
+
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    cursor.execute("""
+    SELECT user_id, name, currency, balance, created_at FROM accounts
+    WHERE id = ?
+    """, (account_id,))
+
+    row = cursor.fetchone()
+    if row is None:
+        return jsonify({"error": "account not found"}), 404
+
+    account_user_id = row["user_id"]
+    if account_user_id != session.get("user_id"):
+        return jsonify({"error": "cannot see another user's account"}), 403
+
+
+    return jsonify(dict(row)), 200
+
 
