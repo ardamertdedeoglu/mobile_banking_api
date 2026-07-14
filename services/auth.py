@@ -35,6 +35,7 @@ def register(data: Dict[str, str]):
         VALUES (?, ?, ?)
         """, (email, hashed_password, date_string))
     except sqlite3.IntegrityError:
+        close_connection(conn)
         return jsonify({"error": "email already exists"}), 409
 
     conn.commit()
@@ -61,7 +62,8 @@ def login(data: Dict[str, str]):
 
     row = cursor.fetchone()
     if row is None:
-        return jsonify({"error": "an account with given email is not found"}), 404
+        close_connection(conn)
+        return jsonify({"error": "invalid email or password"}), 401
 
     close_connection(conn)
     if bcrypt.checkpw(encoded_password, row[1]):

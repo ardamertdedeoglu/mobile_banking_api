@@ -35,14 +35,29 @@ def create_account(data: Dict[str, str]):
 
     date_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    cursor.execute("""
-    INSERT INTO accounts (user_id, name, currency, balance, created_at)
-    VALUES (?, ?, ?, ?, ?)
-    """, (logged_in_user_id, account_name, account_currency, account_initial_balance, date_string))
+    try:
+        conn.execute("BEGIN")
+        cursor.execute("""
+        INSERT INTO accounts (user_id, name, currency, balance, created_at)
+        VALUES (?, ?, ?, ?, ?)
+        """, (logged_in_user_id, account_name, account_currency, account_initial_balance, date_string))
+        
+        new_account_id = cursor.lastrowid
 
-    conn.commit()
+        if account_initial_balance > 0:
+            cursor.execute("""
+            INSERT INTO transactions (account_id, type, amount, counterparty_account_id, created_at)
+            VALUES (?, 'deposit', ?, NULL, ?)
+            """, (new_account_id, account_initial_balance, date_string))
+
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        close_connection(conn)
+        return jsonify({"error": str(e)}), 500
+
     close_connection(conn)
-    return jsonify({"success" : "true", "account_user_id": logged_in_user_id}), 201
+    return jsonify({"success" : "true", "id": new_account_id, "account_user_id": logged_in_user_id}), 201
 
 def list_accounts():
     conn = make_connection()
@@ -56,7 +71,7 @@ def list_accounts():
     cursor = conn.cursor()
 
     cursor.execute("""
-    SELECT name, currency, balance, created_at FROM accounts
+    SELECT id, name, currency, balance, created_at FROM accounts
     WHERE user_id = ?
     """, (logged_in_user_id,))
 
@@ -74,16 +89,18 @@ def list_accounts_by_id(account_id):
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     cursor.execute("""
-    SELECT user_id, name, currency, balance, created_at FROM accounts
+    SELECT id, user_id, name, currency, balance, created_at FROM accounts
     WHERE id = ?
     """, (account_id,))
 
     row = cursor.fetchone()
     if row is None:
+        close_connection(conn)
         return jsonify({"error": "account not found"}), 404
 
     account_user_id = row["user_id"]
     if account_user_id != session.get("user_id"):
+        close_connection(conn)
         return jsonify({"error": "cannot see another user's account"}), 403
 
     close_connection(conn)

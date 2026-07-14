@@ -86,13 +86,13 @@ pip install -r requirements.txt
 
 ### 4. Ortam değişkenlerini ayarlayın
 
-Proje kök dizininde bir `.env` dosyası oluşturun:
+Proje kök dizininde bir `.env` dosyası oluşturun. Şablon olarak `.env.example` dosyasını kullanabilirsiniz:
 
-```env
-SECRET_KEY=buraya_gizli_anahtarinizi_yazin
+```bash
+cp .env.example .env
 ```
 
-Rastgele bir anahtar oluşturmak için:
+Ardından `.env` dosyasını açıp `SECRET_KEY` değerini kendi gizli anahtarınızla güncelleyin. Rastgele bir anahtar oluşturmak için:
 
 ```bash
 python3 -c "import secrets; print(secrets.token_hex(32))"

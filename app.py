@@ -3,11 +3,13 @@ import os
 from flask import Flask, request, session, redirect, url_for, jsonify, render_template
 from dotenv import load_dotenv
 
+from db import initialize_db
 from services.auth import register, login, logout
 from services.accounts import create_account, list_accounts, list_accounts_by_id
 from services.transfer import make_transfer
 from services.transactions import list_transactions
 app = Flask(__name__)
+initialize_db()
 
 @app.get("/")
 def index():

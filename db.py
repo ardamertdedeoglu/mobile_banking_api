@@ -5,7 +5,17 @@ def make_connection():
     try:
         connection = sqlite3.connect('bank.db')
         connection.execute("PRAGMA foreign_keys = ON")
-        cursor = connection.cursor()
+    except sqlite3.Error:
+        return None
+    return connection
+
+
+def initialize_db():
+    conn = make_connection()
+    if conn is None:
+        raise RuntimeError("Failed to connect to database for initialization.")
+    try:
+        cursor = conn.cursor()
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS "users" (
             "id"	INTEGER,
@@ -42,12 +52,11 @@ def make_connection():
         );
         """)
 
-        connection.commit()
-    except sqlite3.Error:
-        return None
-
-    return connection
+        conn.commit()
+    finally:
+        conn.close()
 
 
 def close_connection(conn: sqlite3.Connection):
     conn.close()
+

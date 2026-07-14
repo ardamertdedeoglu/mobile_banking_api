@@ -18,13 +18,16 @@ def list_transactions(account_id: int, params: MultiDict[str, str]):
     row = cursor.fetchone()
 
     if row is None:
+        close_connection(conn)
         return jsonify({"error": "user or account does not exist"}), 404
 
     account_user_id = row["user_id"]
     if account_user_id is None:
+        close_connection(conn)
         return jsonify({"error": "account not found"}), 404
 
     if session.get("user_id") != account_user_id:
+        close_connection(conn)
         return jsonify({"error": "cannot list another user's transactions"}), 403
 
     start_date = params.get("start_date")
@@ -35,7 +38,7 @@ def list_transactions(account_id: int, params: MultiDict[str, str]):
         SELECT account_id, type, amount, counterparty_account_id, created_at
         FROM transactions
         WHERE account_id = ? AND created_at < ?
-        ORDER BY created_at DESC;
+        ORDER BY created_at DESC, id DESC;
         """, (account_id, end_date))
 
     elif start_date is not None and end_date is None:
@@ -43,7 +46,7 @@ def list_transactions(account_id: int, params: MultiDict[str, str]):
         SELECT account_id, type, amount, counterparty_account_id, created_at
         FROM transactions
         WHERE account_id = ? AND created_at > ?
-        ORDER BY created_at DESC;
+        ORDER BY created_at DESC, id DESC;
         """, (account_id, start_date))
 
     elif start_date is not None and end_date is not None:
@@ -51,14 +54,14 @@ def list_transactions(account_id: int, params: MultiDict[str, str]):
         SELECT account_id, type, amount, counterparty_account_id, created_at
         FROM transactions
         WHERE account_id = ? AND created_at > ? AND created_at < ?
-        ORDER BY created_at DESC;
+        ORDER BY created_at DESC, id DESC;
         """, (account_id, start_date, end_date))
     else:
         cursor.execute("""
         SELECT account_id, type, amount, counterparty_account_id, created_at
         FROM transactions
         WHERE account_id = ?
-        ORDER BY created_at DESC;
+        ORDER BY created_at DESC, id DESC;
         """, (account_id,))
 
     rows = cursor.fetchall()
